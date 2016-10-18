@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Example Project</title>
+
+  <!--Bootstrap -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+
+  <!--Angular dependencies -->
+  <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+  <!-- google chart -->
+  <script type="text/javascript" src="bower_components/angular-google-chart/ng-google-chart.min.js"></script>
+  <script type="text/javascript" src="bower_components/chart.js/dist/Chart.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+  <script type="text/javascript" src="app/common/common.module.js"></script>
+  <script type="text/javascript" src="app/common/dataStore.ser.js"></script>
+  <script type="text/javascript" src="app/app.module.js"></script>
+  <script type="text/javascript" src="app/home/home.ctrl.js"></script>
+  <script type="text/javascript" src="app/chart/chart.ctrl.js"></script>
+
+  <script type="text/javascript" src="app/app.router.js"></script>
+  <script type="text/javascript" src="app/setup.ctrl.js"></script>
+</head>
+
+<body ng-app="app">
+  <!-- NAVIGATION -->
+  <nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+      <a class="navbar-brand" ui-sref="#">AngularUI Router</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a ui-sref="home">Home</a></li>
+      <li><a ui-sref="about">About</a></li>
+      <li><a ui-sref="contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="container-fluid">
+    <div ui-view></div>
+  </div>
+</body>
+
+</html>

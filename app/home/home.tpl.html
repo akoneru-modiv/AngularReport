@@ -1,0 +1,46 @@
+<div class="row" ng-controller="HomeController as ctrl">
+  <div class="col-sm-4">
+    <div class="row">
+      <div ui-view="inputbar"></div>
+    </div>
+    <div class="row" style="margin-top: 50px;">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="clearfix">
+              <div class="pull-left">
+                Expense Report ({{ctrl.accounts.length}})
+              </div>
+              <div class="pull-right">
+                Total ({{ctrl.getTotal | currency}})
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <td>
+                    <a href="#" ng-click="ctrl.sortType = 'name'; sortReverse = !sortReverse">Name</a>
+                  </td>
+                  <td>
+                    <a href="#" ng-click="ctrl.sortType = 'amount'; sortReverse = !sortReverse">Amount</a>
+                  </td>
+                  <td>Delete</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="acct in ctrl.accountList track by $index ">
+                  <td>{{ acct.name }}</td>
+                  <td>{{ acct.amount | currency }}</td>
+                  <td><a href="#" ng-click="ctrl.remove(acct)"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ui-view></div>
+</div>
