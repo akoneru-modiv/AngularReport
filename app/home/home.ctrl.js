@@ -2,7 +2,6 @@ angular.module('app').controller('HomeController', function(dataService, $scope,
   var ctrl = this;
   ctrl.account = {};
   //chart data
-  var monthsData = ctrl.monthsData = [];
   ctrl.series = ['Series A'];
   ctrl.chartDataType = 'month';
   ctrl.sortType = "name";
@@ -13,13 +12,11 @@ angular.module('app').controller('HomeController', function(dataService, $scope,
   ctrl.selectedMonth = 0;
   dataService.getItems().then(function(response) {
     ctrl.accountList = response;
-    console.log(ctrl.accountList);
   });
 
   var updateChart = function(xLables, chartData) {
     ctrl.data = [];
     ctrl.labels = [];
-    console.log(chartData);
     angular.forEach(xLables, function(elem) {
       if(chartData[elem]){
         ctrl.labels.push(chartData[elem].name);
@@ -30,39 +27,25 @@ angular.module('app').controller('HomeController', function(dataService, $scope,
 
   ctrl.onClick = function(points, evt) {
     var label = points[0]._model.label;
-    if(label && isNaN(label)){
+    if(dataService.months().indexOf(label) > 0){
       ctrl.selectedMonth = dataService.months().indexOf(label);
-      console.log(ctrl.selectedYear+"/"+ ctrl.selectedMonth);
-      updateChart(dataService.days(ctrl.selectedYear, ctrl.selectedMonth), dataService.dailyData(ctrl.selectedYear, ctrl.selectedMonth));
-      $state.go('home.day');
-    }else{
+    }else if(dataService.years().indexOf(label) > 0){
       ctrl.selectedYear = Number(label);
-      updateChart(dataService.months(), dataService.monthlyData(ctrl.selectedYear));
     }
-    /*var m = dataService.months().indexOf(label);
-    var daysData = [];
-    var numDaysInMonth = 0;
-    angular.forEach(ctrl.accountList, function(elem){
-      console.log(elem.month + " : " + month);
-      if(elem.month === month){
-        var d = new Date(elem.date);
-        var y = d.getFullYear();
-        if(numDaysInMonth === 0)
-          numDaysInMonth = dataService.daysInMonth(m ,y);
-        if(!daysData[d.getDate()]){
-          daysData[d.getDate()] = 0.0;
-        }
-        daysData[d.getDate()] += parseFloat(elem.amount);
-      }
-    });
-    console.log(daysData);*/
+    $scope.$apply()
   };
 
   $scope.$watch('ctrl.accountList.length', function() {
-    console.log('watch');
     ctrl.getTotal = dataService.total(ctrl.accountList);
-    $state.go('home.month');
     updateChart(dataService.years(), dataService.yearlyData());
+  });
+
+  $scope.$watch('ctrl.selectedYear', function(){
+    updateChart(dataService.months(), dataService.monthlyData(ctrl.selectedYear));
+  });
+
+  $scope.$watch('ctrl.selectedMonth', function(){
+    updateChart(dataService.days(ctrl.selectedYear, ctrl.selectedMonth), dataService.dailyData(ctrl.selectedYear, ctrl.selectedMonth));
   });
 
 
